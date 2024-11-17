@@ -6,6 +6,8 @@
 
 namespace msdf_atlas {
 
+// HACK: (jao) I'm doing this to stop -Wunused-function warning
+struct Dummy{
 static void copyRectanglePlacement(Rectangle &dst, const Rectangle &src) {
     dst.x = src.x;
     dst.y = src.y;
@@ -16,6 +18,7 @@ static void copyRectanglePlacement(OrientedRectangle &dst, const OrientedRectang
     dst.y = src.y;
     dst.rotated = src.rotated;
 }
+};
 
 template <typename RectangleType>
 int packRectangles(RectangleType *rectangles, int count, int width, int height, int spacing) {
@@ -50,7 +53,7 @@ std::pair<int, int> packRectangles(RectangleType *rectangles, int count, int spa
             dimensions.first = width;
             dimensions.second = height;
             for (int i = 0; i < count; ++i)
-                copyRectanglePlacement(rectangles[i], rectanglesCopy[i]);
+                Dummy::copyRectanglePlacement(rectangles[i], rectanglesCopy[i]);
             --sizeSelector;
         } else
             ++sizeSelector;
